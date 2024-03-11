@@ -375,7 +375,7 @@ class CrossTransformerEncoderLayer(nn.Module):
         **kwargs
     ):
         factory_kwargs = {"device": device, "dtype": dtype}
-        super().__init__()
+        super().__init__()                                                                                        
 
         self.sparse = sparse
         self.auto_sparsity = auto_sparsity
@@ -391,7 +391,7 @@ class CrossTransformerEncoderLayer(nn.Module):
             d_model, nhead, dropout=dropout, batch_first=batch_first)
         # Implementation of Feedforward model
         self.linear1 = nn.Linear(d_model, dim_feedforward, **factory_kwargs)
-        self.linear2 = nn.Linear(dim_feedforward, d_model, **factcd
+        self.linear2 = nn.Linear(dim_feedforward, d_model, **factory_kwargs)
         self.norm_first = norm_first
         self.norm1: nn.Module
         self.norm2: nn.Module
