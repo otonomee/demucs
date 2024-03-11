@@ -37,7 +37,7 @@ def load_requirements(name):
 
 
 REQUIRED = load_requirements('requirements_minimal.txt')
-ALL_REQUIRED = load_requirements('requirements.txt')
+# ALL_REQUIRED = load_requirements('requirements.txt')
 
 try:
     with open(HERE / "README.md", encoding='utf-8') as f:
@@ -56,9 +56,6 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=['demucs'],
-    extras_require={
-        'dev': ALL_REQUIRED,
-    },
     install_requires=REQUIRED,
     include_package_data=True,
     entry_points={
