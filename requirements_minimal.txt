@@ -1,6 +1,3 @@
-#-f https://download.pytorch.org/whl/torch_stable.html
-# please make sure you have already a pytorch install that is cuda enabled!
-# Attempt to reduce slug size by discarding GPU-specific libraries
 setuptools==65.5.0
 wheel==0.38.0
 dora-search
