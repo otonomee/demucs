@@ -1,3 +1,4 @@
+-f https://download.pytorch.org/whl/torch_stable.html
 # please make sure you have already a pytorch install that is cuda enabled!
 dora-search
 einops
