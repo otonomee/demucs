@@ -279,7 +279,6 @@ class MyTransformerEncoderLayer(nn.TransformerEncoderLayer):
         group_norm=0,
         norm_first=False,
         norm_out=False,
-        layer_norm_eps=1e-5,
         layer_scale=False,
         init_values=1e-4,
         device=None,
@@ -292,49 +291,21 @@ class MyTransformerEncoderLayer(nn.TransformerEncoderLayer):
         auto_sparsity=False,
         sparsity=0.95,
         batch_first=False,
+        **kwargs
     ):
         factory_kwargs = {"device": device, "dtype": dtype}
+        
         super().__init__(
             d_model=d_model,
             nhead=nhead,
             dim_feedforward=dim_feedforward,
             dropout=dropout,
             activation=activation,
-            layer_norm_eps=layer_norm_eps,
             batch_first=batch_first,
             norm_first=norm_first,
             device=device,
             dtype=dtype,
         )
-        self.sparse = sparse
-        self.auto_sparsity = auto_sparsity
-        if sparse:
-            if not auto_sparsity:
-                self.mask_type = mask_type
-                self.sparse_attn_window = sparse_attn_window
-                self.global_window = global_window
-            self.sparsity = sparsity
-        if group_norm:
-            self.norm1 = MyGroupNorm(int(group_norm), d_model, eps=layer_norm_eps, **factory_kwargs)
-            self.norm2 = MyGroupNorm(int(group_norm), d_model, eps=layer_norm_eps, **factory_kwargs)
-
-        self.norm_out = None
-        if self.norm_first & norm_out:
-            self.norm_out = MyGroupNorm(num_groups=int(norm_out), num_channels=d_model)
-        self.gamma_1 = (
-            LayerScale(d_model, init_values, True) if layer_scale else nn.Identity()
-        )
-        self.gamma_2 = (
-            LayerScale(d_model, init_values, True) if layer_scale else nn.Identity()
-        )
-
-        if sparse:
-            self.self_attn = MultiheadAttention(
-                d_model, nhead, dropout=dropout, batch_first=batch_first,
-                auto_sparsity=sparsity if auto_sparsity else 0,
-            )
-            self.__setattr__("src_mask", torch.zeros(1, 1))
-            self.mask_random_seed = mask_random_seed
 
     def forward(self, src, src_mask=None, src_key_padding_mask=None):
         """
@@ -401,6 +372,7 @@ class CrossTransformerEncoderLayer(nn.Module):
         device=None,
         dtype=None,
         batch_first=False,
+        **kwargs
     ):
         factory_kwargs = {"device": device, "dtype": dtype}
         super().__init__()
@@ -414,26 +386,24 @@ class CrossTransformerEncoderLayer(nn.Module):
                 self.global_window = global_window
             self.sparsity = sparsity
 
-        self.cross_attn: nn.Module
+        self.cross_attn: nn.Moduleq
         self.cross_attn = nn.MultiheadAttention(
             d_model, nhead, dropout=dropout, batch_first=batch_first)
         # Implementation of Feedforward model
         self.linear1 = nn.Linear(d_model, dim_feedforward, **factory_kwargs)
-        self.dropout = nn.Dropout(dropout)
-        self.linear2 = nn.Linear(dim_feedforward, d_model, **factory_kwargs)
-
+        self.linear2 = nn.Linear(dim_feedforward, d_model, **factcd
         self.norm_first = norm_first
         self.norm1: nn.Module
         self.norm2: nn.Module
         self.norm3: nn.Module
         if group_norm:
-            self.norm1 = MyGroupNorm(int(group_norm), d_model, eps=layer_norm_eps, **factory_kwargs)
-            self.norm2 = MyGroupNorm(int(group_norm), d_model, eps=layer_norm_eps, **factory_kwargs)
-            self.norm3 = MyGroupNorm(int(group_norm), d_model, eps=layer_norm_eps, **factory_kwargs)
+            self.norm1 = MyGroupNorm(int(group_norm), d_model, **factory_kwargs)
+            self.norm2 = MyGroupNorm(int(group_norm), d_model, **factory_kwargs)
+            self.norm3 = MyGroupNorm(int(group_norm), d_model, **factory_kwargs)
         else:
-            self.norm1 = nn.LayerNorm(d_model, eps=layer_norm_eps, **factory_kwargs)
-            self.norm2 = nn.LayerNorm(d_model, eps=layer_norm_eps, **factory_kwargs)
-            self.norm3 = nn.LayerNorm(d_model, eps=layer_norm_eps, **factory_kwargs)
+            self.norm1 = nn.LayerNorm(d_model, **factory_kwargs)
+            self.norm2 = nn.LayerNorm(d_model, **factory_kwargs)
+            self.norm3 = nn.LayerNorm(d_model, **factory_kwargs)
 
         self.norm_out = None
         if self.norm_first & norm_out:
@@ -557,6 +527,7 @@ class CrossTransformerEncoder(nn.Module):
         global_window: int = 50,
         auto_sparsity: bool = False,
         sparsity: float = 0.95,
+        **kwargs
     ):
         super().__init__()
         """
