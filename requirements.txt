@@ -1,8 +1,5 @@
 # Attempt to reduce slug size by discarding GPU-specific libraries
---find-links https://download.pytorch.org/whl/cpu/torch_stable.html
-torch==2.2.0
---find-links https://download.pytorch.org/whl/cpu/torch_stable.html
-torchvision==0.1.6
+
 dora-search>=0.1.12
 diffq>=0.2.1
 einops
@@ -16,6 +13,8 @@ mypy
 openunmix
 pyyaml
 submitit
+torch>=1.8.1+cpu
+--find-links https://download.pytorch.org/whl/cpu/torch_stable.html
 torchaudio>=0.8,<2.1
 tqdm
 treetable
