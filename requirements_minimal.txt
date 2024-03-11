@@ -6,7 +6,7 @@ julius>=0.2.3
 lameenc>=1.2
 openunmix
 pyyaml
-torch>=1.8.1+cpu
+torch>=1.8.1
 --find-links https://download.pytorch.org/whl/cpu/torch_stable.html
 torchaudio>=0.8,<2.1
 tqdm
