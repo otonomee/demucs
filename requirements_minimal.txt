@@ -1,11 +1,12 @@
 #-f https://download.pytorch.org/whl/torch_stable.html
 # please make sure you have already a pytorch install that is cuda enabled!
+--find-links https://download.pytorch.org/whl/cpu
+torch
 dora-search
 einops
 julius>=0.2.3
 lameenc>=1.2
 openunmix
 pyyaml
-torch
 torchaudio>=0.8,<2.1
 tqdm
