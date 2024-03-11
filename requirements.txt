@@ -1,5 +1,8 @@
---find-links https://download.pytorch.org/whl/cpu
-torch
+# Attempt to reduce slug size by discarding GPU-specific libraries
+--find-links https://download.pytorch.org/whl/cpu/torch_stable.html
+torch==2.0.1
+--find-links https://download.pytorch.org/whl/cpu/torch_stable.html
+torchvision==0.15.2
 dora-search>=0.1.12
 diffq>=0.2.1
 einops
