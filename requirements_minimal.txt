@@ -2,9 +2,9 @@
 # please make sure you have already a pytorch install that is cuda enabled!
 # Attempt to reduce slug size by discarding GPU-specific libraries
 --find-links https://download.pytorch.org/whl/cpu/torch_stable.html
-torch==2.0.1
+torch==2.2.0
 --find-links https://download.pytorch.org/whl/cpu/torch_stable.html
-torchvision==0.15.2
+torchvision==0.1.6
 dora-search
 einops
 julius>=0.2.3
