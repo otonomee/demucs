@@ -16,7 +16,6 @@ cloudpickle==3.0.0
 
 # Editable install with no version control (demucs==4.1.0a2)
 
--e /app/demucs
 
 dora_search==0.1.12
 
