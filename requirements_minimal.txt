@@ -7,6 +7,6 @@ lameenc>=1.2
 openunmix
 pyyaml
 soundfile
-torch @ http://download.pytorch.org/whl/cpu/torch-2.2.1%2Bcpu-cp312-cp312-linux_x86_64.whl
+torch @ http://download.pytorch.org/whl/cpu/torch-2.1.0%2Bcpu-cp311-cp311-linux_x86_64.whl
 tqdm
 
